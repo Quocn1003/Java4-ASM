@@ -15,7 +15,7 @@ public class DataSharingServlet extends HttpServlet {
         // 1. HttpServletRequest - Request scope (single request only)
         request.setAttribute("requestData", "Data stored in request scope - " + System.currentTimeMillis());
         request.setAttribute("requestInfo", "This data exists only for this request");
-        
+
         // 2. HttpSession - Session scope (across multiple requests from same user)
         HttpSession session = request.getSession();
         Integer pageViews = (Integer) session.getAttribute("pageViews");
