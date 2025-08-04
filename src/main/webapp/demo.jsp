@@ -6,6 +6,10 @@
     <title>Data Sharing Demo</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logout-btn { background-color: #dc3545; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; }
+        .logout-btn:hover { background-color: #c82333; }
+        .user-info { color: #666; }
         .section { border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 5px; }
         .request { background-color: #e8f5e8; }
         .session { background-color: #e8f0ff; }
@@ -22,7 +26,13 @@
         pageContext.setAttribute("currentTime", new java.util.Date().toString());
     %>
     
-    <h1>🚀 Data Sharing Demo: Request, Session, Application & Page Scopes</h1>
+    <div class="header">
+        <h1>🚀 Data Sharing Demo: Request, Session, Application & Page Scopes</h1>
+        <div>
+            <span class="user-info">Welcome, ${sessionScope.user.email}!</span>
+            <a href="logout" class="logout-btn">Logout</a>
+        </div>
+    </div>
     
     <!-- Request Scope Data -->
     <div class="section request">

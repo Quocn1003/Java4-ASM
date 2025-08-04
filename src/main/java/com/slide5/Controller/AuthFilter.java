@@ -7,11 +7,13 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.slide5.Entity.User;
+@WebFilter(urlPatterns = {"/secure", "/demo", "/demo.jsp"}) // Apply this filter to secure URLs and demo page
 public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,11 +31,18 @@ public class AuthFilter implements Filter {
         User user = (User) (session != null ? session.getAttribute("user") : null);
 
         if (user == null) {
+            // Store the URL they were trying to access in session
+            HttpSession newSession = httpRequest.getSession(true);
+            String requestURI = httpRequest.getRequestURI();
+            String queryString = httpRequest.getQueryString();
+            String fullURL = requestURI + (queryString != null ? "?" + queryString : "");
+            newSession.setAttribute("secureURL", fullURL);
+            
             // Redirect to login page if not logged in
-            request.setAttribute("secureURL", httpRequest.getRequestURI());
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
         } else {
-            // Proceed with the request
+            // User is logged in, proceed with the request
+            System.out.println("🔒 AuthFilter: User " + user.getEmail() + " accessing " + httpRequest.getRequestURI());
             chain.doFilter(request, response);
         }
     }
