@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Trang chi tiet</title>
+        <title>Detail</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -152,7 +152,7 @@
 
         <div class="navbar">
             <a href="home" class="brand">ONLINE ENTERTAINMENT</a>
-            <a href="like">MY FAVORITES</a>
+            <a href="myFavourite">MY FAVORITES</a>
             <div class="dropdown">
                 <a href="#">MY ACCOUNT</a>
                 <div class="dropdown-content">
@@ -177,39 +177,78 @@
         <div class="container mt-4">
             <div class="row">
                 <!-- Main Video Detail -->
-                <div class="col-md-9 video-container">
-                    <div class="mb-3">
-                        <video width="100%" height="400" controls>
-                            <source src="${video.link}" type="video/mp4">
-                            Trình duyệt không hỗ trợ video.
-                        </video>
-                    </div>
-                    <div class="video-info mb-2">
-                        <h5 class="fw-bold">${video.title}</h5>
-                        <p>${video.description}</p>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <form action="/like" method="post">
-                            <input type="hidden" name="videoId" value="${video.id}">
-                            <button type="submit" class="btn btn-like">Like</button>
-                        </form>
-                        <form action="/share" method="post">
-                            <input type="hidden" name="videoId" value="${video.id}">
-                            <button type="submit" class="btn btn-share">Share</button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Sidebar with suggested videos -->
-                <div class="col-md-3 sidebar">
-                    <c:forEach items="${suggestedVideos}" var="v">
-                        <div class="d-flex mb-3 align-items-center">
-                            <a href="/detail?id=${v.id}" class="poster me-2">
-                                <img src="${v.poster}" alt="Poster" width="80" height="60">
-                            </a>
-                            <a href="/detail?id=${v.id}">${v.title}</a>
+                <div style="display: flex;">
+                    <!-- Left: Main video detail -->
+                    <div class="video-card" style="flex: 2; margin-right: 32px;">
+                        <div class="mb-3">
+                            <video width="100%" height="400" controls>
+                                <source src="${video.poster}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
-                    </c:forEach>
+                        <div class="video-title">
+                            <h5 class="fw-bold">${video.title}</h5>
+                        </div>
+                        <p>${video.description}</p>
+                        <div class="actions">
+                            <form method="post" action="like?id=${video.id}" style="display:inline;">
+                                <button type="submit" class="btn btn-like">Like</button>
+                            </form>
+                            <form method="get" action="share?id=${video.id}" style="display:inline;">
+                                <button type="submit" class="btn btn-share">Share</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Right: 5 suggested videos -->
+                    <div style=" flex: 1; background: #f9f9f9; border-radius: 8px;">
+                        <style>
+                            .suggested-video-card {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 110px;
+                                background: #fff;
+                                border-radius: 12px;
+                                border: 1px solid #ccc;
+                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                                margin-bottom: 18px;
+                                transition: box-shadow 0.2s, transform 0.2s;
+                                cursor: pointer;
+                            }
+
+                            .suggested-poster {
+                                border-radius: 8px;
+                                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+                                margin-left: 20px;
+                                border: 2px solid orange;
+                                width: 90px;
+                                height: 65px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                object-fit: cover;
+                                background: #eee;
+                                font-weight: bold;
+                            }
+
+                            .suggested-title {
+                                flex: 1;
+                                text-align: center;
+                                font-weight: bold;
+                                padding: 5px;
+                                font-size: 1.1em;
+                                letter-spacing: 0.5px;
+                            }
+                        </style>
+                        <c:forEach items="${topVideos}" var="v">
+                            <div class="suggested-video-card" onclick="window.location='detail?id=${v.id}'">
+                                <a href="detail?id=${video.id}">
+                                    <div class="suggested-poster">POSTER</div>
+                                </a>
+                                <div class="suggested-title">${v.title}</div>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
     </body>

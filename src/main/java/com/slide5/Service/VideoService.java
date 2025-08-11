@@ -69,6 +69,14 @@ public class VideoService implements VideoDAO {
     }
 
     @Override
+    public List<Video> findTop5() {
+        String jpql = "SELECT v FROM Video v ORDER BY v.views DESC";
+        return entityManager.createQuery(jpql, Video.class)
+                .setMaxResults(5)
+                .getResultList();
+    }
+
+    @Override
     public List<Video> findPage(int page, int size) {
         String jpql = "SELECT v FROM Video v ORDER BY v.views DESC";
         return entityManager.createQuery(jpql, Video.class)

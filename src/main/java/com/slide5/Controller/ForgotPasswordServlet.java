@@ -1,6 +1,7 @@
 package com.slide5.Controller;
 
 import com.slide5.Entity.User;
+import com.slide5.Service.MailService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -43,12 +44,17 @@ public class ForgotPasswordServlet extends HttpServlet {
                     .orElse(null);
 
             if (user != null) {
-                // Giả lập gửi email
-                System.out.println("Gửi email tới " + email + " với mật khẩu: " + user.getPassword());
-
-                request.setAttribute("success", "Your password has been sent to your email.");
+                try {
+                    MailService mailService = new MailService();
+                    String subject = "Forgot password - ONLINE ENTERTAINMENT";
+                    String content = "Your password: <b>" + user.getPassword() + "</b>";
+                    mailService.sendEmails(new String[] { email }, subject, content);
+                    request.setAttribute("success", "Your password has been sent to your email.");
+                } catch (Exception ex) {
+                    request.setAttribute("error", "Send email not success." + ex.getMessage());
+                }
             } else {
-                request.setAttribute("error", "Username or Email is incorrect.");
+                request.setAttribute("error", "Wrong Username or Email.");
             }
 
         } catch (Exception e) {

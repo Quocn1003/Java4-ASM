@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Trang chu</title>
+        <title>Home</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -160,7 +160,7 @@
 
         <div class="navbar">
             <a href="home" class="brand">ONLINE ENTERTAINMENT</a>
-            <a href="like">MY FAVORITES</a>
+            <a href="myFavourite">MY FAVORITES</a>
             <div class="dropdown">
                 <a href="#">MY ACCOUNT</a>
                 <div class="dropdown-content">
@@ -194,7 +194,7 @@
                             <form method="post" action="like?id=${video.id}" style="display:inline;">
                                 <button type="submit" class="btn btn-like">Like</button>
                             </form>
-                            <form method="get" action="share?id=${video.id}" style="display:inline;">
+                            <form method="post" action="share?id=${video.id}" style="display:inline;">
                                 <button type="submit" class="btn btn-share">Share</button>
                             </form>
                         </div>

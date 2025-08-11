@@ -43,14 +43,14 @@ public class RegistrationServlet extends HttpServlet {
 
         // Kiểm tra username tồn tại chưa
         if (userDAO.findById(username) != null) {
-            request.setAttribute("error", "Username đã tồn tại!");
+            request.setAttribute("error", "Username has already been taken!");
             request.getRequestDispatcher("/registration.jsp").forward(request, response);
             return;
         }
 
         // Kiểm tra email tồn tại chưa
         if (userDAO.findByEmail(email) != null) {
-            request.setAttribute("error", "Email đã được sử dụng!");
+            request.setAttribute("error", "Email has already been registered!");
             request.getRequestDispatcher("/registration.jsp").forward(request, response);
             return;
         }
@@ -77,7 +77,7 @@ public class RegistrationServlet extends HttpServlet {
         response.addCookie(cookieUser);
         response.addCookie(cookiePass);
 
-        request.getSession().setAttribute("message", "Đăng ký thành công! Bạn đã được đăng nhập.");
+        request.getSession().setAttribute("message", "Registration successful! You are now logged in.");
         // Chuyển hướng sau khi đăng ký thành công
         String secureURL = (String) request.getSession().getAttribute("secureURL");
         if (secureURL != null) {

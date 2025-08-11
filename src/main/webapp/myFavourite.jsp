@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Trang yêu thích</title>
+        <title>My Favourites</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -135,13 +135,16 @@
                 margin-top: 20px;
             }
 
-            .pagination button {
+            .page-btn {
                 margin: 0 5px;
                 padding: 5px 10px;
                 background-color: #ccc;
                 border: none;
                 border-radius: 3px;
                 font-weight: bold;
+                color: black;
+                text-decoration: none;
+                display: inline-block;
             }
         </style>
     </head>
@@ -151,7 +154,7 @@
 
         <div class="navbar">
             <a href="home" class="brand">ONLINE ENTERTAINMENT</a>
-            <a href="like">MY FAVORITES</a>
+            <a href="myFavourite">MY FAVORITES</a>
             <div class="dropdown">
                 <a href="#">MY ACCOUNT</a>
                 <div class="dropdown-content">
@@ -192,7 +195,14 @@
                     </div>
                 </c:forEach>
             </div>
+        </div>
 
+        <div class="pagination">
+            <a href="?page=1" class="page-btn">&lt;|</a>
+            <a href="?page=${prevPage}" class="page-btn">&lt;&lt;</a>
+            <span>${currentPage} / ${totalPages}</span>
+            <a href="?page=${nextPage}" class="page-btn">&gt;&gt;</a>
+            <a href="?page=${totalPages}" class="page-btn">|&gt;</a>
         </div>
     </body>
 

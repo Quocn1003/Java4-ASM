@@ -139,7 +139,7 @@
         <body>
             <div class="navbar">
                 <a href="home" class="brand">ONLINE ENTERTAINMENT</a>
-                <a href="like">MY FAVORITES</a>
+                <a href="myFavourite">MY FAVORITES</a>
                 <div class="dropdown">
                     <a href="#">MY ACCOUNT</a>
                     <div class="dropdown-content">

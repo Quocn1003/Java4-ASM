@@ -20,6 +20,8 @@ public interface VideoDAO {
 
     public List<Video> findTop6();
 
+    public List<Video> findTop5();
+
     public List<Video> findPage(int page, int size);
 
     public long count();

@@ -55,13 +55,13 @@ public class LoginServlet extends HttpServlet {
         User user = userDAO.findById(username);
 
         if (user == null) {
-            request.setAttribute("error", "Username không tồn tại!");
+            request.setAttribute("error", "Username not found!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
 
         if (!user.getPassword().equals(password)) {
-            request.setAttribute("error", "Mật khẩu không đúng!");
+            request.setAttribute("error", "Wrong password!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
@@ -85,7 +85,7 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(cookieUser);
             response.addCookie(cookiePass);
         }
-        request.getSession().setAttribute("message", "Đăng nhập thành công!");
+        request.getSession().setAttribute("message", "Login successful!");
 
         String secureURL = (String) request.getSession().getAttribute("secureURL");
         if (secureURL != null) {

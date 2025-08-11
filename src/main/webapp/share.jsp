@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Registration</title>
+        <title>Share</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -74,11 +74,11 @@
                 margin: 0 5px;
             }
 
-            .btn-register {
+            .btn-share {
                 background-color: orange;
             }
 
-            .register-container {
+            .share-container {
                 border: 1px solid #ccc;
                 padding: 10px;
                 width: 30%;
@@ -89,7 +89,7 @@
                 margin-top: 10px;
             }
 
-            .register-title {
+            .share-title {
                 width: 100%;
                 text-align: center;
                 margin: 10px;
@@ -97,7 +97,7 @@
                 font-weight: bold;
             }
 
-            .register-button {
+            .share-button {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -120,6 +120,11 @@
     </head>
 
     <body>
+        <c:if test="${not empty sessionScope.successMessage}">
+            <div style="color: green; font-weight: bold;">${sessionScope.successMessage}</div>
+            <c:remove var="successMessage" scope="session" />
+        </c:if>
+
 
 
         <div class="navbar">
@@ -146,10 +151,11 @@
                 </div>
             </div>
         </div>
+
         <div class="container">
-            <div class="register-container">
-                <div class="register-title">
-                    <p>Registration</p>
+            <div class="share-container">
+                <div class="share-title">
+                    <p>Share video to your friends</p>
                 </div>
 
                 <!-- Hiển thị lỗi -->
@@ -157,21 +163,12 @@
                     <div class="error">${error}</div>
                 </c:if>
 
-                <form action="${pageContext.request.contextPath}/registration" method="post">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username" required><br><br>
+                <form action="" method="post">
+                    <label for="email">Your friend's email:</label><br>
+                    <input type="text" id="email" name="email" required><br><br>
 
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password" required><br><br>
-
-                    <label for="fullname">Fullname:</label><br>
-                    <input type="text" id="fullname" name="fullname" required><br><br>
-
-                    <label for="email">Email address:</label><br>
-                    <input type="email" id="email" name="email" required><br><br>
-
-                    <div class="register-button">
-                        <button class="btn btn-register" type="submit">Sign up</button>
+                    <div class="login-button">
+                        <button class="btn btn-share" type="submit">Send</button>
                     </div>
                 </form>
             </div>
