@@ -1,16 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <!DOCTYPE html>
-    <html>
+    <html lang="vi">
 
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Trang yêu thích</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
             }
 
-            /* Navbar */
+            /* Navbar container */
             .navbar {
                 display: flex;
                 background-color: #f1c40f;
@@ -32,12 +32,13 @@
                 margin-right: auto;
             }
 
-            /* Dropdown */
+            /* Dropdown container */
             .dropdown {
                 position: relative;
                 display: inline-block;
             }
 
+            /* Dropdown menu */
             .dropdown-content {
                 display: none;
                 position: absolute;
@@ -63,7 +64,54 @@
                 display: block;
             }
 
-            /* Form */
+            .dropdown>a {
+                color: #1f3dc4;
+            }
+
+            /* Video grid */
+            .container {
+                width: 90%;
+                margin: 20px auto;
+            }
+
+            .video-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+            }
+
+            .video-card {
+                border: 1px solid #ccc;
+                width: 30%;
+                min-width: 220px;
+                text-align: center;
+                padding: 10px;
+                box-shadow: 2px 2px 6px #ddd;
+            }
+
+            .poster {
+                width: 100%;
+                height: 120px;
+                border: 2px solid orange;
+                margin-bottom: 10px;
+                background-color: #eee;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+
+            .video-title {
+                background-color: #d0e6c2;
+                font-weight: bold;
+                padding: 5px;
+            }
+
+            .actions {
+                margin-top: 10px;
+            }
+
             .btn {
                 padding: 5px 10px;
                 border: none;
@@ -74,57 +122,31 @@
                 margin: 0 5px;
             }
 
-            .btn-login {
+            .btn-like {
+                background-color: rgb(18, 148, 255);
+            }
+
+            .btn-share {
                 background-color: orange;
             }
 
-            .login-container {
-                border: 1px solid #ccc;
-                padding: 10px;
-                width: 30%;
-                box-shadow: 2px 2px 6px #ddd;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-top: 10px;
-            }
-
-            .login-title {
-                width: 100%;
+            .pagination {
                 text-align: center;
-                margin: 10px;
-                background-color: #d0e6c2;
+                margin-top: 20px;
+            }
+
+            .pagination button {
+                margin: 0 5px;
+                padding: 5px 10px;
+                background-color: #ccc;
+                border: none;
+                border-radius: 3px;
                 font-weight: bold;
-            }
-
-            .login-button {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 10px;
-            }
-
-            .container {
-                margin: 20px auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .error {
-                color: red;
-                font-size: 14px;
-                margin-bottom: 10px;
             }
         </style>
     </head>
 
     <body>
-        <c:if test="${not empty sessionScope.successMessage}">
-            <div style="color: green; font-weight: bold;">${sessionScope.successMessage}</div>
-            <c:remove var="successMessage" scope="session" />
-        </c:if>
-
 
 
         <div class="navbar">
@@ -151,36 +173,26 @@
                 </div>
             </div>
         </div>
-
         <div class="container">
-            <div class="login-container">
-                <div class="login-title">
-                    <p>Login</p>
-                </div>
-
-                <!-- Hiển thị lỗi -->
-                <c:if test="${not empty error}">
-                    <div class="error">${error}</div>
-                </c:if>
-
-                <form action="${pageContext.request.contextPath}/login" method="post">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username"
-                        value="${cookie.username.value != null ? cookie.username.value : ''}" required><br><br>
-
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password"
-                        value="${cookie.password.value != null ? cookie.password.value : ''}" required><br><br>
-
-                    <input type="checkbox" id="remember" name="remember" <c:if
-                        test="${cookie.username.value != null}">checked</c:if> >
-                    <label for="remember">Remember me</label><br><br>
-
-                    <div class="login-button">
-                        <button class="btn btn-login" type="submit">Login</button>
+            <div class="video-grid">
+                <c:forEach items="${videos}" var="video">
+                    <div class="video-card">
+                        <a href="detail?id=${video.id}">
+                            <div class="poster">POSTER</div>
+                        </a>
+                        <div class="video-title">${video.title}</div>
+                        <div class="actions">
+                            <form method="post" action="unlike?id=${video.id}" style="display:inline;">
+                                <button type="submit" class="btn btn-like">Unlike</button>
+                            </form>
+                            <form method="get" action="share?id=${video.id}" style="display:inline;">
+                                <button type="submit" class="btn btn-share">Share</button>
+                            </form>
+                        </div>
                     </div>
-                </form>
+                </c:forEach>
             </div>
+
         </div>
     </body>
 

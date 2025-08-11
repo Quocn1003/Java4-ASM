@@ -14,18 +14,20 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Get the session and invalidate it
+
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
-            System.out.println("🚪 User logged out - Session invalidated");
         }
-        
-        // Redirect to login page
-        response.sendRedirect(request.getContextPath() + "/login");
+
+        // Tạo session mới để chứa message (hoặc lấy session mới)
+        HttpSession newSession = request.getSession(true);
+        newSession.setAttribute("message", "Logout successful!");
+
+        // Redirect về home
+        response.sendRedirect(request.getContextPath() + "/home");
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Forgot Password</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -74,11 +74,11 @@
                 margin: 0 5px;
             }
 
-            .btn-login {
+            .btn-send {
                 background-color: orange;
             }
 
-            .login-container {
+            .form-container {
                 border: 1px solid #ccc;
                 padding: 10px;
                 width: 30%;
@@ -89,7 +89,7 @@
                 margin-top: 10px;
             }
 
-            .login-title {
+            .form-title {
                 width: 100%;
                 text-align: center;
                 margin: 10px;
@@ -97,7 +97,7 @@
                 font-weight: bold;
             }
 
-            .login-button {
+            .form-button {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -116,16 +116,16 @@
                 font-size: 14px;
                 margin-bottom: 10px;
             }
+
+            .success {
+                color: green;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
         </style>
     </head>
 
     <body>
-        <c:if test="${not empty sessionScope.successMessage}">
-            <div style="color: green; font-weight: bold;">${sessionScope.successMessage}</div>
-            <c:remove var="successMessage" scope="session" />
-        </c:if>
-
-
 
         <div class="navbar">
             <a href="home" class="brand">ONLINE ENTERTAINMENT</a>
@@ -153,31 +153,28 @@
         </div>
 
         <div class="container">
-            <div class="login-container">
-                <div class="login-title">
-                    <p>Login</p>
+            <div class="form-container">
+                <div class="form-title">
+                    <p>Forgot Password</p>
                 </div>
 
-                <!-- Hiển thị lỗi -->
+                <!-- Hiển thị thông báo -->
                 <c:if test="${not empty error}">
                     <div class="error">${error}</div>
                 </c:if>
+                <c:if test="${not empty success}">
+                    <div class="success">${success}</div>
+                </c:if>
 
-                <form action="${pageContext.request.contextPath}/login" method="post">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username"
-                        value="${cookie.username.value != null ? cookie.username.value : ''}" required><br><br>
+                <form action="${pageContext.request.contextPath}/forgotPassword" method="post">
+                    <label for="username">Enter your username:</label><br>
+                    <input type="text" id="username" name="username" required><br><br>
 
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password"
-                        value="${cookie.password.value != null ? cookie.password.value : ''}" required><br><br>
+                    <label for="email">Enter your email address:</label><br>
+                    <input type="email" id="email" name="email" required><br><br>
 
-                    <input type="checkbox" id="remember" name="remember" <c:if
-                        test="${cookie.username.value != null}">checked</c:if> >
-                    <label for="remember">Remember me</label><br><br>
-
-                    <div class="login-button">
-                        <button class="btn btn-login" type="submit">Login</button>
+                    <div class="form-button">
+                        <button class="btn btn-send" type="submit">Send Password</button>
                     </div>
                 </form>
             </div>

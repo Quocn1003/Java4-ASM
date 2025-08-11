@@ -4,13 +4,12 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Change Password</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
             }
 
-            /* Navbar */
             .navbar {
                 display: flex;
                 background-color: #f1c40f;
@@ -32,7 +31,6 @@
                 margin-right: auto;
             }
 
-            /* Dropdown */
             .dropdown {
                 position: relative;
                 display: inline-block;
@@ -63,7 +61,6 @@
                 display: block;
             }
 
-            /* Form */
             .btn {
                 padding: 5px 10px;
                 border: none;
@@ -74,11 +71,11 @@
                 margin: 0 5px;
             }
 
-            .btn-login {
+            .btn-change {
                 background-color: orange;
             }
 
-            .login-container {
+            .form-container {
                 border: 1px solid #ccc;
                 padding: 10px;
                 width: 30%;
@@ -89,7 +86,7 @@
                 margin-top: 10px;
             }
 
-            .login-title {
+            .form-title {
                 width: 100%;
                 text-align: center;
                 margin: 10px;
@@ -97,7 +94,7 @@
                 font-weight: bold;
             }
 
-            .login-button {
+            .form-button {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -116,16 +113,16 @@
                 font-size: 14px;
                 margin-bottom: 10px;
             }
+
+            .success {
+                color: green;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
         </style>
     </head>
 
     <body>
-        <c:if test="${not empty sessionScope.successMessage}">
-            <div style="color: green; font-weight: bold;">${sessionScope.successMessage}</div>
-            <c:remove var="successMessage" scope="session" />
-        </c:if>
-
-
 
         <div class="navbar">
             <a href="home" class="brand">ONLINE ENTERTAINMENT</a>
@@ -153,31 +150,34 @@
         </div>
 
         <div class="container">
-            <div class="login-container">
-                <div class="login-title">
-                    <p>Login</p>
+            <div class="form-container">
+                <div class="form-title">
+                    <p>Change Password</p>
                 </div>
 
-                <!-- Hiển thị lỗi -->
+                <!-- Hiển thị thông báo -->
                 <c:if test="${not empty error}">
                     <div class="error">${error}</div>
                 </c:if>
+                <c:if test="${not empty success}">
+                    <div class="success">${success}</div>
+                </c:if>
 
-                <form action="${pageContext.request.contextPath}/login" method="post">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username"
-                        value="${cookie.username.value != null ? cookie.username.value : ''}" required><br><br>
+                <form action="${pageContext.request.contextPath}/changePassword" method="post">
+                    <label for="id">Username:</label><br>
+                    <input type="text" id="id" name="id" required><br><br>
 
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password"
-                        value="${cookie.password.value != null ? cookie.password.value : ''}" required><br><br>
+                    <label for="currentPassword">Current Password:</label><br>
+                    <input type="password" id="currentPassword" name="currentPassword" required><br><br>
 
-                    <input type="checkbox" id="remember" name="remember" <c:if
-                        test="${cookie.username.value != null}">checked</c:if> >
-                    <label for="remember">Remember me</label><br><br>
+                    <label for="newPassword">New Password:</label><br>
+                    <input type="password" id="newPassword" name="newPassword" required><br><br>
 
-                    <div class="login-button">
-                        <button class="btn btn-login" type="submit">Login</button>
+                    <label for="confirmPassword">Confirm New Password:</label><br>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+                    <div class="form-button">
+                        <button class="btn btn-change" type="submit">Change Password</button>
                     </div>
                 </form>
             </div>

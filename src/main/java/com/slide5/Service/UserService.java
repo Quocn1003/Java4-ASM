@@ -10,22 +10,26 @@ import com.slide5.Utils.XJPA;
 
 public class UserService implements UserDAO {
     private EntityManager entityManager = XJPA.getEntityManager();
+
     // Implement the methods defined in UserDAO interface
     @Override
     public User findById(String id) {
         // Implementation logic to find a user by ID
         User user = entityManager.find(User.class, id);
         return user; // Return the found user or null if not found
-        
+
     }
 
     @Override
     public User findByEmail(String email) {
-        // Implementation logic to find a user by email
         String query = "SELECT u FROM User u WHERE u.email = :email";
-        return entityManager.createQuery(query, User.class)
-                            .setParameter("email", email)
-                            .getSingleResult();
+        try {
+            return entityManager.createQuery(query, User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (javax.persistence.NoResultException e) {
+            return null; // Không tìm thấy user
+        }
     }
 
     @Override

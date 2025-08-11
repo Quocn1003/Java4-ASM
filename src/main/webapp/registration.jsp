@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Registration</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -74,11 +74,11 @@
                 margin: 0 5px;
             }
 
-            .btn-login {
+            .btn-register {
                 background-color: orange;
             }
 
-            .login-container {
+            .register-container {
                 border: 1px solid #ccc;
                 padding: 10px;
                 width: 30%;
@@ -89,7 +89,7 @@
                 margin-top: 10px;
             }
 
-            .login-title {
+            .register-title {
                 width: 100%;
                 text-align: center;
                 margin: 10px;
@@ -97,7 +97,7 @@
                 font-weight: bold;
             }
 
-            .login-button {
+            .register-button {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -120,11 +120,6 @@
     </head>
 
     <body>
-        <c:if test="${not empty sessionScope.successMessage}">
-            <div style="color: green; font-weight: bold;">${sessionScope.successMessage}</div>
-            <c:remove var="successMessage" scope="session" />
-        </c:if>
-
 
 
         <div class="navbar">
@@ -151,11 +146,10 @@
                 </div>
             </div>
         </div>
-
         <div class="container">
-            <div class="login-container">
-                <div class="login-title">
-                    <p>Login</p>
+            <div class="register-container">
+                <div class="register-title">
+                    <p>Registration</p>
                 </div>
 
                 <!-- Hiển thị lỗi -->
@@ -163,21 +157,21 @@
                     <div class="error">${error}</div>
                 </c:if>
 
-                <form action="${pageContext.request.contextPath}/login" method="post">
+                <form action="${pageContext.request.contextPath}/registration" method="post">
                     <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username"
-                        value="${cookie.username.value != null ? cookie.username.value : ''}" required><br><br>
+                    <input type="text" id="username" name="username" required><br><br>
 
                     <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password"
-                        value="${cookie.password.value != null ? cookie.password.value : ''}" required><br><br>
+                    <input type="password" id="password" name="password" required><br><br>
 
-                    <input type="checkbox" id="remember" name="remember" <c:if
-                        test="${cookie.username.value != null}">checked</c:if> >
-                    <label for="remember">Remember me</label><br><br>
+                    <label for="fullname">Fullname:</label><br>
+                    <input type="text" id="fullname" name="fullname" required><br><br>
 
-                    <div class="login-button">
-                        <button class="btn btn-login" type="submit">Login</button>
+                    <label for="email">Email address:</label><br>
+                    <input type="email" id="email" name="email" required><br><br>
+
+                    <div class="register-button">
+                        <button class="btn btn-register" type="submit">Sign up</button>
                     </div>
                 </form>
             </div>

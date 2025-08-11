@@ -21,13 +21,12 @@ public class Video {
     private String description;
     private String poster;
     private Boolean active;
-    private Integer view;
+    private Integer views;
 
     @OneToMany(mappedBy = "video")
     private List<Favorite> favorites;
 
     @OneToMany(mappedBy = "video")
     private List<Share> shares;
-    
 
 }
